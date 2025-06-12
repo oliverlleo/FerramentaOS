@@ -437,8 +437,37 @@ body {
     gap: 15px;
 }
 
-.icon-selector input {
+.icon-selector input[type="hidden"] {
     flex: 1;
+}
+
+.icon-selector button {
+    flex-shrink: 0;
+}
+
+.icon-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.icon-option {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e1e8ed;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.icon-option:hover,
+.icon-option.selected {
+    background: #e1e8ed;
 }
 
 .icon-preview {
