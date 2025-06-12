@@ -1,95 +1,79 @@
 // admin.js
-import { 
-    db, 
-    auth, 
-    collection, 
-    addDoc, 
-    getDocs, 
-    doc, 
-    updateDoc, 
-    deleteDoc, 
-    query, 
-    orderBy,
-    signInWithEmailAndPassword, 
-    signOut, 
-    onAuthStateChanged 
+import {
+    db,
+    collection,
+    addDoc,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc,
+    query,
+    orderBy
 } from './firebase-config.js';
 
 // Elementos DOM
-const loginSection = document.getElementById('loginSection');
 const adminPanel = document.getElementById('adminPanel');
-const loginForm = document.getElementById('loginForm');
-const loginError = document.getElementById('loginError');
-const logoutBtn = document.getElementById('logoutBtn');
-const userEmail = document.getElementById('userEmail');
+// Login elements removed
 const toolForm = document.getElementById('toolForm');
 const adminToolsList = document.getElementById('adminToolsList');
 const toolIcon = document.getElementById('toolIcon');
+const chooseIconBtn = document.getElementById('chooseIconBtn');
+const iconPicker = document.getElementById('iconPicker');
 const iconPreview = document.getElementById('iconPreview');
 const formTitle = document.getElementById('formTitle');
 const submitText = document.getElementById('submitText');
 const cancelEdit = document.getElementById('cancelEdit');
 const editingId = document.getElementById('editingId');
 
+// Ícones disponíveis para seleção
+const availableIcons = [
+    'fas fa-code',
+    'fas fa-palette',
+    'fas fa-chart-bar',
+    'fas fa-tools',
+    'fas fa-bolt',
+    'fas fa-bug',
+    'fas fa-brain',
+    'fas fa-rocket',
+    'fas fa-database',
+    'fas fa-project-diagram',
+    'fas fa-mobile-alt',
+    'fas fa-puzzle-piece',
+    'fas fa-cloud'
+];
+
 // Estado da aplicação
 let isEditing = false;
 
-// Verificar estado de autenticação
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        showAdminPanel(user);
-    } else {
-        showLoginSection();
-    }
-});
-
-// Mostrar seção de login
-function showLoginSection() {
-    loginSection.style.display = 'block';
-    adminPanel.style.display = 'none';
-}
-
-// Mostrar painel administrativo
-function showAdminPanel(user) {
-    loginSection.style.display = 'none';
+// Mostrar painel administrativo diretamente
+function showAdminPanel() {
     adminPanel.style.display = 'block';
-    userEmail.textContent = user.email;
     loadTools();
 }
 
-// Login
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        loginError.style.display = 'none';
-    } catch (error) {
-        loginError.textContent = 'Email ou senha incorretos';
-        loginError.style.display = 'block';
-    }
-});
+// Exibir painel logo ao carregar a página
+showAdminPanel();
 
-// Logout
-logoutBtn.addEventListener('click', async () => {
-    try {
-        await signOut(auth);
-    } catch (error) {
-        console.error('Erro ao fazer logout:', error);
-    }
-});
+// Configurar seletor de ícones
+function populateIconPicker() {
+    iconPicker.innerHTML = '';
+    availableIcons.forEach(iconClass => {
+        const span = document.createElement('span');
+        span.className = 'icon-option';
+        span.innerHTML = `<i class="${iconClass}"></i>`;
+        span.addEventListener('click', () => {
+            toolIcon.value = iconClass;
+            iconPreview.className = iconClass;
+            iconPicker.classList.remove('show');
+        });
+        iconPicker.appendChild(span);
+    });
+}
 
-// Preview do ícone
-toolIcon.addEventListener('input', (e) => {
-    const iconClass = e.target.value.trim();
-    if (iconClass) {
-        iconPreview.className = iconClass;
-    } else {
-        iconPreview.className = 'fas fa-question';
-    }
+populateIconPicker();
+
+chooseIconBtn.addEventListener('click', () => {
+    iconPicker.classList.toggle('show');
 });
 
 // Formulário de ferramenta
@@ -101,7 +85,7 @@ toolForm.addEventListener('submit', async (e) => {
         url: document.getElementById('toolUrl').value.trim(),
         category: document.getElementById('toolCategory').value,
         description: document.getElementById('toolDescription').value.trim(),
-        icon: document.getElementById('toolIcon').value.trim(),
+        icon: toolIcon.value.trim(),
         createdAt: new Date().toISOString()
     };
     
@@ -123,6 +107,7 @@ toolForm.addEventListener('submit', async (e) => {
         
         toolForm.reset();
         iconPreview.className = 'fas fa-question';
+        iconPicker.classList.remove('show');
         loadTools();
         
     } catch (error) {
@@ -145,6 +130,7 @@ function resetForm() {
     cancelEdit.style.display = 'none';
     toolForm.reset();
     iconPreview.className = 'fas fa-question';
+    iconPicker.classList.remove('show');
 }
 
 // Carregar ferramentas
@@ -217,8 +203,9 @@ window.editTool = function(id, tool) {
     document.getElementById('toolCategory').value = tool.category;
     document.getElementById('toolDescription').value = tool.description;
     document.getElementById('toolIcon').value = tool.icon;
-    
+
     iconPreview.className = tool.icon;
+    iconPicker.classList.remove('show');
     formTitle.textContent = 'Editar Ferramenta';
     submitText.textContent = 'Atualizar Ferramenta';
     cancelEdit.style.display = 'inline-block';
