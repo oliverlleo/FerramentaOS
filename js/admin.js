@@ -54,21 +54,7 @@ function showAdminPanel() {
 // Exibir painel logo ao carregar a página
 showAdminPanel();
 
-// Configurar seletor de ícones
-function populateIconPicker() {
-    iconPicker.innerHTML = '';
-    availableIcons.forEach(iconClass => {
-        const span = document.createElement('span');
-        span.className = 'icon-option';
-        span.innerHTML = `<i class="${iconClass}"></i>`;
-        span.addEventListener('click', () => {
-            toolIcon.value = iconClass;
-            iconPreview.className = iconClass;
-            iconPicker.style.display = 'none';
-        });
-        iconPicker.appendChild(span);
-    });
-}
+
 
 populateIconPicker();
 
