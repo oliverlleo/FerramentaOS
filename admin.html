@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin | Ferramentas Perfecta</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <section id="loginSection" class="login-section">
+            <div class="login-container">
+                <div class="login-header">
+                    <img src="assets/logo.png" alt="Perfecta Logo" class="login-logo">
+                    <h2>Painel Administrativo</h2>
+                    <p>Acesso restrito para administradores</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                </form>
+                <div id="loginError" class="error-message" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- Admin Panel -->
+        <section id="adminPanel" class="admin-panel" style="display: none;">
+            <!-- Header -->
+            <header class="header">
+                <h1 class="title">PAINEL ADMINISTRATIVO | PERFECTA</h1>
+                <div class="header-actions">
+                    <span id="userEmail" class="user-info"></span>
+                    <button id="logoutBtn" class="btn btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </header>
+
+            <!-- Formulário de Adição/Edição -->
+            <section class="form-section">
+                <h2 id="formTitle">Adicionar Nova Ferramenta</h2>
+                <form id="toolForm" class="tool-form">
+                    <input type="hidden" id="editingId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="toolName">Nome da Ferramenta:</label>
+                            <input type="text" id="toolName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="toolUrl">URL/Link:</label>
+                            <input type="url" id="toolUrl" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="toolCategory">Categoria:</label>
+                            <select id="toolCategory" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="desenvolvimento">Desenvolvimento</option>
+                                <option value="design">Design</option>
+                                <option value="produtividade">Produtividade</option>
+                                <option value="analise">Análise</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="toolDescription">Descrição/Para que serve:</label>
+                            <textarea id="toolDescription" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="toolIcon">Ícone (Font Awesome):</label>
+                            <div class="icon-selector">
+                                <input type="text" id="toolIcon" placeholder="Ex: fas fa-code" required>
+                                <div class="icon-preview">
+                                    <i id="iconPreview" class="fas fa-question"></i>
+                                </div>
+                            </div>
+                            <small>Exemplos: fas fa-code, fas fa-palette, fas fa-chart-bar, fas fa-tools</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> <span id="submitText">Salvar Ferramenta</span>
+                        </button>
+                        <button type="button" id="cancelEdit" class="btn btn-secondary" style="display: none;">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Lista de Ferramentas Cadastradas -->
+            <section class="admin-tools-section">
+                <h2>Ferramentas Cadastradas</h2>
+                <div id="adminToolsList" class="admin-tools-list">
+                    <!-- Lista será carregada aqui -->
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
+

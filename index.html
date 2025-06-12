@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas | Perfecta</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">FERRAMENTAS | PERFECTA</h1>
+            <div class="logo">
+                <img src="assets/logo.png" alt="Perfecta Logo">
+            </div>
+        </header>
+
+        <!-- Filtros e Busca -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar ferramentas...">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">
+                        <i class="fas fa-th"></i> Todas
+                    </button>
+                    <button class="filter-btn" data-category="desenvolvimento">
+                        <i class="fas fa-code"></i> Desenvolvimento
+                    </button>
+                    <button class="filter-btn" data-category="design">
+                        <i class="fas fa-palette"></i> Design
+                    </button>
+                    <button class="filter-btn" data-category="produtividade">
+                        <i class="fas fa-tasks"></i> Produtividade
+                    </button>
+                    <button class="filter-btn" data-category="analise">
+                        <i class="fas fa-chart-bar"></i> Análise
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div id="loading" class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>Carregando ferramentas...</p>
+        </div>
+
+        <!-- Grid de Ferramentas -->
+        <section class="tools-section">
+            <div id="toolsGrid" class="tools-grid">
+                <!-- Ferramentas serão carregadas aqui via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Mensagem quando não há ferramentas -->
+        <div id="noTools" class="no-tools" style="display: none;">
+            <i class="fas fa-tools"></i>
+            <h3>Nenhuma ferramenta encontrada</h3>
+            <p>Não há ferramentas cadastradas ou que correspondam à sua busca.</p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Perfecta - Ferramentas para Profissionais</p>
+        </footer>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+
