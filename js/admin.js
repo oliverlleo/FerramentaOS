@@ -54,26 +54,7 @@ function showAdminPanel() {
 // Exibir painel logo ao carregar a página
 showAdminPanel();
 
-// Configurar seletor de ícones
-function populateIconPicker() {
-    iconPicker.innerHTML = '';
-    availableIcons.forEach(iconClass => {
-        const span = document.createElement('span');
-        span.className = 'icon-option';
-        span.innerHTML = `<i class="${iconClass}"></i>`;
-        span.addEventListener('click', () => {
-            toolIcon.value = iconClass;
-            iconPreview.className = iconClass;
-            iconPicker.classList.remove('show');
-        });
-        iconPicker.appendChild(span);
-    });
-}
 
-populateIconPicker();
-
-chooseIconBtn.addEventListener('click', () => {
-    iconPicker.classList.toggle('show');
 });
 
 // Formulário de ferramenta
@@ -107,7 +88,7 @@ toolForm.addEventListener('submit', async (e) => {
         
         toolForm.reset();
         iconPreview.className = 'fas fa-question';
-        iconPicker.classList.remove('show');
+
         loadTools();
         
     } catch (error) {
@@ -130,7 +111,7 @@ function resetForm() {
     cancelEdit.style.display = 'none';
     toolForm.reset();
     iconPreview.className = 'fas fa-question';
-    iconPicker.classList.remove('show');
+
 }
 
 // Carregar ferramentas
@@ -205,7 +186,7 @@ window.editTool = function(id, tool) {
     document.getElementById('toolIcon').value = tool.icon;
 
     iconPreview.className = tool.icon;
-    iconPicker.classList.remove('show');
+
     formTitle.textContent = 'Editar Ferramenta';
     submitText.textContent = 'Atualizar Ferramenta';
     cancelEdit.style.display = 'inline-block';
