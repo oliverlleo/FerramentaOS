@@ -54,14 +54,15 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="toolIcon">Ícone (Font Awesome):</label>
+                            <label for="toolIcon">Ícone:</label>
                             <div class="icon-selector">
-                                <input type="text" id="toolIcon" placeholder="Ex: fas fa-code" required>
+                                <input type="hidden" id="toolIcon" required>
+                                <button type="button" id="chooseIconBtn" class="btn btn-secondary">Selecionar</button>
                                 <div class="icon-preview">
                                     <i id="iconPreview" class="fas fa-question"></i>
                                 </div>
                             </div>
-                            <small>Exemplos: fas fa-code, fas fa-palette, fas fa-chart-bar, fas fa-tools</small>
+                            <div id="iconPicker" class="icon-picker" style="display:none;"></div>
                         </div>
                     </div>
 

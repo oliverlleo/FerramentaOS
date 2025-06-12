@@ -17,11 +17,30 @@ const adminPanel = document.getElementById('adminPanel');
 const toolForm = document.getElementById('toolForm');
 const adminToolsList = document.getElementById('adminToolsList');
 const toolIcon = document.getElementById('toolIcon');
+const chooseIconBtn = document.getElementById('chooseIconBtn');
+const iconPicker = document.getElementById('iconPicker');
 const iconPreview = document.getElementById('iconPreview');
 const formTitle = document.getElementById('formTitle');
 const submitText = document.getElementById('submitText');
 const cancelEdit = document.getElementById('cancelEdit');
 const editingId = document.getElementById('editingId');
+
+// Ícones disponíveis para seleção
+const availableIcons = [
+    'fas fa-code',
+    'fas fa-palette',
+    'fas fa-chart-bar',
+    'fas fa-tools',
+    'fas fa-bolt',
+    'fas fa-bug',
+    'fas fa-brain',
+    'fas fa-rocket',
+    'fas fa-database',
+    'fas fa-project-diagram',
+    'fas fa-mobile-alt',
+    'fas fa-puzzle-piece',
+    'fas fa-cloud'
+];
 
 // Estado da aplicação
 let isEditing = false;
@@ -35,14 +54,11 @@ function showAdminPanel() {
 // Exibir painel logo ao carregar a página
 showAdminPanel();
 
-// Preview do ícone
-toolIcon.addEventListener('input', (e) => {
-    const iconClass = e.target.value.trim();
-    if (iconClass) {
-        iconPreview.className = iconClass;
-    } else {
-        iconPreview.className = 'fas fa-question';
-    }
+
+populateIconPicker();
+
+chooseIconBtn.addEventListener('click', () => {
+    iconPicker.style.display = iconPicker.style.display === 'none' ? 'flex' : 'none';
 });
 
 // Formulário de ferramenta
@@ -54,7 +70,7 @@ toolForm.addEventListener('submit', async (e) => {
         url: document.getElementById('toolUrl').value.trim(),
         category: document.getElementById('toolCategory').value,
         description: document.getElementById('toolDescription').value.trim(),
-        icon: document.getElementById('toolIcon').value.trim(),
+        icon: toolIcon.value.trim(),
         createdAt: new Date().toISOString()
     };
     
@@ -76,6 +92,7 @@ toolForm.addEventListener('submit', async (e) => {
         
         toolForm.reset();
         iconPreview.className = 'fas fa-question';
+        iconPicker.style.display = 'none';
         loadTools();
         
     } catch (error) {
@@ -98,6 +115,7 @@ function resetForm() {
     cancelEdit.style.display = 'none';
     toolForm.reset();
     iconPreview.className = 'fas fa-question';
+    iconPicker.style.display = 'none';
 }
 
 // Carregar ferramentas
@@ -170,8 +188,9 @@ window.editTool = function(id, tool) {
     document.getElementById('toolCategory').value = tool.category;
     document.getElementById('toolDescription').value = tool.description;
     document.getElementById('toolIcon').value = tool.icon;
-    
+
     iconPreview.className = tool.icon;
+    iconPicker.style.display = 'none';
     formTitle.textContent = 'Editar Ferramenta';
     submitText.textContent = 'Atualizar Ferramenta';
     cancelEdit.style.display = 'inline-block';
