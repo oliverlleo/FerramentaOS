@@ -8,7 +8,8 @@ const firebaseConfig = {
     apiKey: "AIzaSyCB8ye34UIkBghExod4JlBV3oqge5oM2Ic",
     authDomain: "ferramentas-perfecta.firebaseapp.com",
     projectId: "ferramentas-perfecta",
-    storageBucket: "ferramentas-perfecta.firebasestorage.app",
+    databaseURL: "https://ferramentas-perfecta-default-rtdb.firebaseio.com",
+    storageBucket: "ferramentas-perfecta.appspot.com",
     messagingSenderId: "550722056346",
     appId: "1:550722056346:web:5076a97aca7fe276af6f23",
     measurementId: "G-8YKBJLSSL6"
