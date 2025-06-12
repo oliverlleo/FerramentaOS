@@ -55,11 +55,6 @@ function showAdminPanel() {
 showAdminPanel();
 
 
-
-populateIconPicker();
-
-chooseIconBtn.addEventListener('click', () => {
-    iconPicker.style.display = iconPicker.style.display === 'none' ? 'flex' : 'none';
 });
 
 // Formulário de ferramenta
@@ -93,7 +88,7 @@ toolForm.addEventListener('submit', async (e) => {
         
         toolForm.reset();
         iconPreview.className = 'fas fa-question';
-        iconPicker.style.display = 'none';
+
         loadTools();
         
     } catch (error) {
@@ -116,7 +111,7 @@ function resetForm() {
     cancelEdit.style.display = 'none';
     toolForm.reset();
     iconPreview.className = 'fas fa-question';
-    iconPicker.style.display = 'none';
+
 }
 
 // Carregar ferramentas
@@ -191,7 +186,7 @@ window.editTool = function(id, tool) {
     document.getElementById('toolIcon').value = tool.icon;
 
     iconPreview.className = tool.icon;
-    iconPicker.style.display = 'none';
+
     formTitle.textContent = 'Editar Ferramenta';
     submitText.textContent = 'Atualizar Ferramenta';
     cancelEdit.style.display = 'inline-block';
