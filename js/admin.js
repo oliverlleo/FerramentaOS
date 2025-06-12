@@ -1,27 +1,19 @@
 // admin.js
-import { 
-    db, 
-    auth, 
-    collection, 
-    addDoc, 
-    getDocs, 
-    doc, 
-    updateDoc, 
-    deleteDoc, 
-    query, 
-    orderBy,
-    signInWithEmailAndPassword, 
-    signOut, 
-    onAuthStateChanged 
+import {
+    db,
+    collection,
+    addDoc,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc,
+    query,
+    orderBy
 } from './firebase-config.js';
 
 // Elementos DOM
-const loginSection = document.getElementById('loginSection');
 const adminPanel = document.getElementById('adminPanel');
-const loginForm = document.getElementById('loginForm');
-const loginError = document.getElementById('loginError');
-const logoutBtn = document.getElementById('logoutBtn');
-const userEmail = document.getElementById('userEmail');
+// Login elements removed
 const toolForm = document.getElementById('toolForm');
 const adminToolsList = document.getElementById('adminToolsList');
 const toolIcon = document.getElementById('toolIcon');
@@ -34,53 +26,14 @@ const editingId = document.getElementById('editingId');
 // Estado da aplicação
 let isEditing = false;
 
-// Verificar estado de autenticação
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        showAdminPanel(user);
-    } else {
-        showLoginSection();
-    }
-});
-
-// Mostrar seção de login
-function showLoginSection() {
-    loginSection.style.display = 'block';
-    adminPanel.style.display = 'none';
-}
-
-// Mostrar painel administrativo
-function showAdminPanel(user) {
-    loginSection.style.display = 'none';
+// Mostrar painel administrativo diretamente
+function showAdminPanel() {
     adminPanel.style.display = 'block';
-    userEmail.textContent = user.email;
     loadTools();
 }
 
-// Login
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        loginError.style.display = 'none';
-    } catch (error) {
-        loginError.textContent = 'Email ou senha incorretos';
-        loginError.style.display = 'block';
-    }
-});
-
-// Logout
-logoutBtn.addEventListener('click', async () => {
-    try {
-        await signOut(auth);
-    } catch (error) {
-        console.error('Erro ao fazer logout:', error);
-    }
-});
+// Exibir painel logo ao carregar a página
+showAdminPanel();
 
 // Preview do ícone
 toolIcon.addEventListener('input', (e) => {
