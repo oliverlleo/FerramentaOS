@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração | Ferramentas Perfecta</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#E53E3E',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                        },
+                        secondary: {
+                            500: '#2D3748',
+                            600: '#1a202c',
+                            700: '#171923',
+                        },
+                        gray: {
+                            50: '#F7FAFC',
+                            100: '#EDF2F7',
+                            200: '#E2E8F0',
+                            300: '#CBD5E0',
+                            400: '#A0AEC0',
+                            500: '#718096',
+                            600: '#4A5568',
+                            700: '#2D3748',
+                            800: '#1A202C',
+                            900: '#171923',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-down': 'slideDown 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.4s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter bg-gradient-to-br from-gray-50 via-white to-primary-50 min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-2">
+                        <img src="assets/images/LOGO_PERFECTAAPENASLOGO.png" alt="Perfecta Logo" class="w-8 h-8 rounded-lg">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Administração</h1>
+                            <p class="text-xs text-gray-500">Ferramentas Perfecta</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="viewSiteBtn" class="text-gray-500 hover:text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2">
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Ver Site</span>
+                    </button>
+                    <button id="backBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span>Voltar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header -->
+            <div class="mb-8 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Painel de Administração</h2>
+                <p class="text-gray-600">Gerencie suas ferramentas de forma simples e eficiente</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="mb-8">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-0 overflow-x-auto">
+                        <button class="tab-btn active" data-tab="add">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            Adicionar
+                        </button>
+                        <button class="tab-btn" data-tab="manage">
+                            <i data-lucide="list" class="w-4 h-4"></i>
+                            Gerenciar
+                        </button>
+                        <button class="tab-btn" data-tab="stats">
+                            <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                            Estatísticas
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                
+                <!-- Add Tool Tab -->
+                <div id="addTab" class="tab-panel active">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="bg-white rounded-2xl shadow-xl p-8 animate-slide-up">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="plus" class="w-8 h-8 text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Adicionar Nova Ferramenta</h3>
+                                <p class="text-gray-600">Preencha os dados abaixo para cadastrar uma nova ferramenta</p>
+                            </div>
+
+                            <form id="addToolForm" class="space-y-6">
+                                <div>
+                                    <label for="toolName" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Nome da Ferramenta *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="toolName" 
+                                        name="name"
+                                        required
+                                        placeholder="Ex: Figma, Notion, GitHub..."
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="toolUrl" class="block text-sm font-medium text-gray-700 mb-2">
+                                        URL da Ferramenta *
+                                    </label>
+                                    <input 
+                                        type="url" 
+                                        id="toolUrl" 
+                                        name="url"
+                                        required
+                                        placeholder="https://exemplo.com"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="toolDescription" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Descrição
+                                    </label>
+                                    <textarea 
+                                        id="toolDescription" 
+                                        name="description"
+                                        rows="3"
+                                        placeholder="Descreva brevemente o que esta ferramenta faz..."
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200 resize-none"
+                                    ></textarea>
+                                </div>
+
+                                <div>
+                                    <label for="toolCategory" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Categoria *
+                                    </label>
+                                    <select 
+                                        id="toolCategory" 
+                                        name="category"
+                                        required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                                    >
+                                        <option value="">Selecione uma categoria</option>
+                                        <option value="desenvolvimento">🚀 Desenvolvimento</option>
+                                        <option value="design">🎨 Design</option>
+                                        <option value="produtividade">⚡ Produtividade</option>
+                                        <option value="marketing">📈 Marketing</option>
+                                        <option value="analise">📊 Análise</option>
+                                        <option value="comunicacao">💬 Comunicação</option>
+                                        <option value="outros">📦 Outros</option>
+                                        <option value="catalogos">📚 Catálogos</option>
+                                        <option value="documentos">📄 Documentos</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex space-x-4 pt-4">
+                                    <button 
+                                        type="submit" 
+                                        id="saveBtn"
+                                        class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                                    >
+                                        <i data-lucide="save" class="w-4 h-4"></i>
+                                        <span>Salvar Ferramenta</span>
+                                    </button>
+                                    <button 
+                                        type="reset" 
+                                        class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-all duration-200 flex items-center space-x-2"
+                                    >
+                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                        <span>Limpar</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manage Tools Tab -->
+                <div id="manageTab" class="tab-panel">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden animate-slide-up mt-8">
+                        
+                        <!-- Header -->
+                        <div class="p-6 border-b border-gray-200">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900">Ferramentas Cadastradas</h3>
+                                    <p class="text-gray-600">Gerencie todas as suas ferramentas</p>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="relative">
+                                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                                        <input 
+                                            type="text" 
+                                            id="searchTools"
+                                            placeholder="Pesquisar..."
+                                            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                                        >
+                                    </div>
+                                    <button id="refreshBtn" class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-200">
+                                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tools Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ferramenta</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                        <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="toolsTableBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Loading state -->
+                                    <tr id="tableLoading">
+                                        <td colspan="5" class="px-6 py-12 text-center">
+                                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mb-4"></div>
+                                            <p class="text-gray-600">Carregando ferramentas...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div id="statsTab" class="tab-panel">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-slide-up mt-8">
+                        <div class="bg-white rounded-2xl p-6 shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total de Ferramentas</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="statTotalTools">0</p>
+                                </div>
+                                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="package" class="w-6 h-6 text-primary-600"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Categorias</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="statTotalCategories">0</p>
+                                </div>
+                                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="grid-3x3" class="w-6 h-6 text-green-600"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Adicionadas Hoje</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="statTodayTools">0</p>
+                                </div>
+                                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="calendar" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Esta Semana</p>
+                                    <p class="text-3xl font-bold text-gray-900" id="statWeekTools">0</p>
+                                </div>
+                                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="trending-up" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Distribution -->
+                    <div class="bg-white rounded-2xl shadow-xl p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Distribuição por Categoria</h3>
+                        <div id="categoryStats" class="space-y-4">
+                            <!-- Category stats will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-gray-900">Editar Ferramenta</h3>
+                        <button id="closeEditModal" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <form id="editToolForm" class="p-6 space-y-6">
+                    <input type="hidden" id="editToolId">
+                    
+                    <div>
+                        <label for="editToolName" class="block text-sm font-medium text-gray-700 mb-2">
+                            Nome da Ferramenta *
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editToolName" 
+                            name="name"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="editToolUrl" class="block text-sm font-medium text-gray-700 mb-2">
+                            URL da Ferramenta *
+                        </label>
+                        <input 
+                            type="url" 
+                            id="editToolUrl" 
+                            name="url"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="editToolDescription" class="block text-sm font-medium text-gray-700 mb-2">
+                            Descrição
+                        </label>
+                        <textarea 
+                            id="editToolDescription" 
+                            name="description"
+                            rows="3"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200 resize-none"
+                        ></textarea>
+                    </div>
+
+                    <div>
+                        <label for="editToolCategory" class="block text-sm font-medium text-gray-700 mb-2">
+                            Categoria *
+                        </label>
+                        <select 
+                            id="editToolCategory" 
+                            name="category"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                        >
+                            <option value="desenvolvimento">🚀 Desenvolvimento</option>
+                            <option value="design">🎨 Design</option>
+                            <option value="produtividade">⚡ Produtividade</option>
+                            <option value="marketing">📈 Marketing</option>
+                            <option value="analise">📊 Análise</option>
+                            <option value="comunicacao">💬 Comunicação</option>
+                            <option value="outros">📦 Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="flex space-x-4 pt-4">
+                        <button 
+                            type="submit" 
+                            id="updateBtn"
+                            class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+                        >
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span>Salvar Alterações</span>
+                        </button>
+                        <button 
+                            type="button" 
+                            id="cancelEdit"
+                            class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-all duration-200"
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-scale-in">
+                <div class="p-6">
+                    <div class="flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mx-auto mb-4">
+                        <i data-lucide="trash-2" class="w-8 h-8 text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Confirmar Exclusão</h3>
+                    <p class="text-gray-600 text-center mb-6">
+                        Tem certeza que deseja excluir a ferramenta 
+                        <strong id="deleteToolName"></strong>? 
+                        Esta ação não pode ser desfeita.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button 
+                            id="confirmDelete"
+                            class="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+                        >
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            <span>Excluir</span>
+                        </button>
+                        <button 
+                            id="cancelDelete"
+                            class="flex-1 border border-gray-300 text-gray-700 py-3 px-6 rounded-xl font-medium hover:bg-gray-50 transition-all duration-200"
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+        <div class="bg-white rounded-xl shadow-2xl border border-gray-200 p-4 flex items-center space-x-3 min-w-[300px]">
+            <div id="toastIcon" class="w-8 h-8 rounded-full flex items-center justify-center">
+                <!-- Icon will be inserted here -->
+            </div>
+            <div class="flex-1">
+                <p id="toastMessage" class="font-medium text-gray-900"></p>
+            </div>
+            <button id="closeToast" class="text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/admin.js"></script>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
