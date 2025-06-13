@@ -1,77 +1,211 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferramentas | Perfecta</title>
-    <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Ferramentas Perfecta | Sua Coleção de Ferramentas</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#E53E3E',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                        },
+                        secondary: {
+                            500: '#2D3748',
+                            600: '#1a202c',
+                            700: '#171923',
+                        },
+                        gray: {
+                            50: '#F7FAFC',
+                            100: '#EDF2F7',
+                            200: '#E2E8F0',
+                            300: '#CBD5E0',
+                            400: '#A0AEC0',
+                            500: '#718096',
+                            600: '#4A5568',
+                            700: '#2D3748',
+                            800: '#1A202C',
+                            900: '#171923',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-down': 'slideDown 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.4s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1 class="title">FERRAMENTAS | PERFECTA</h1>
-            <div class="logo">
-                <img src="assets/logo.png" alt="Perfecta Logo">
-            </div>
-        </header>
-
-        <!-- Filtros e Busca -->
-        <section class="search-section">
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Buscar ferramentas...">
+<body class="font-inter bg-gradient-to-br from-gray-50 via-white to-primary-50 min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-2">
+                        <img src="assets/images/LOGO_PERFECTAAPENASLOGO.png" alt="Perfecta Logo" class="w-8 h-8 rounded-lg">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Ferramentas</h1>
+                            <p class="text-xs text-gray-500">Perfecta</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-category="all">
-                        <i class="fas fa-th"></i> Todas
+                
+                <div class="flex items-center space-x-4">
+                    <button id="searchToggle" class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-200">
+                        <i data-lucide="search" class="w-5 h-5"></i>
                     </button>
-                    <button class="filter-btn" data-category="desenvolvimento">
-                        <i class="fas fa-code"></i> Desenvolvimento
-                    </button>
-                    <button class="filter-btn" data-category="design">
-                        <i class="fas fa-palette"></i> Design
-                    </button>
-                    <button class="filter-btn" data-category="produtividade">
-                        <i class="fas fa-tasks"></i> Produtividade
-                    </button>
-                    <button class="filter-btn" data-category="analise">
-                        <i class="fas fa-chart-bar"></i> Análise
+                    <button id="adminBtn" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl">
+                        <i data-lucide="settings" class="w-4 h-4"></i>
+                        <span>Admin</span>
                     </button>
                 </div>
             </div>
-        </section>
-
-        <!-- Loading -->
-        <div id="loading" class="loading-container">
-            <div class="loading-spinner"></div>
-            <p>Carregando ferramentas...</p>
         </div>
+    </nav>
 
-        <!-- Grid de Ferramentas -->
-        <section class="tools-section">
-            <div id="toolsGrid" class="tools-grid">
-                <!-- Ferramentas serão carregadas aqui via JavaScript -->
+    <!-- Search Bar -->
+    <div id="searchBar" class="fixed top-16 left-0 right-0 z-40 bg-white border-b border-gray-200 transform -translate-y-full transition-transform duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="relative">
+                <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Pesquisar ferramentas..." 
+                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                >
             </div>
-        </section>
-
-        <!-- Mensagem quando não há ferramentas -->
-        <div id="noTools" class="no-tools" style="display: none;">
-            <i class="fas fa-tools"></i>
-            <h3>Nenhuma ferramenta encontrada</h3>
-            <p>Não há ferramentas cadastradas ou que correspondam à sua busca.</p>
         </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2025 Perfecta - Ferramentas para Profissionais</p>
-        </footer>
     </div>
 
-    <script type="module" src="js/app.js"></script>
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="animate-fade-in">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                    Suas <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-600">Ferramentas</span>
+                    <br>em um só lugar
+                </h2>
+              
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12 animate-slide-up max-w-md mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary-600" id="totalTools">0</div>
+                    <div class="text-gray-500">Ferramentas</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary-600" id="totalCategories">0</div>
+                    <div class="text-gray-500">Categorias</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="px-4 sm:px-6 lg:px-8 mb-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-center gap-2" id="categoryFilters">
+                <button class="filter-btn active" data-category="all">
+                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                    Todas
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="max-w-7xl mx-auto">
+            <!-- Loading State -->
+            <div id="loadingState" class="text-center py-16">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mb-4"></div>
+                <p class="text-gray-600">Carregando ferramentas...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-16 hidden">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="package" class="w-12 h-12 text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhuma ferramenta encontrada</h3>
+                <p class="text-gray-600 mb-6">Comece adicionando sua primeira ferramenta</p>
+                <button id="addFirstTool" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 inline-flex items-center space-x-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Adicionar Ferramenta</span>
+                </button>
+            </div>
+
+            <!-- Tools Grid -->
+            <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden">
+                <!-- Tools will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <img src="assets/images/LOGO_PERFECTAAPENASLOGO.png" alt="Perfecta Logo" class="w-8 h-8 rounded-lg">
+                    <span class="text-xl font-bold">Ferramentas Perfecta</span>
+                </div>
+                <p class="text-gray-400 mb-6">Sua coleção pessoal de ferramentas organizadas</p>
+                <div class="border-t border-gray-800 pt-6">
+                    <p class="text-gray-500">&copy; 2024 Ferramentas Perfecta.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>
 

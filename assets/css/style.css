@@ -1,0 +1,679 @@
+/* Custom Styles for Ferramentas Perfecta */
+
+/* CSS Variables for new color palette */
+:root {
+    --primary-50: #fef2f2;
+    --primary-100: #fee2e2;
+    --primary-500: #E53E3E;
+    --primary-600: #dc2626;
+    --primary-700: #b91c1c;
+    
+    --secondary-500: #2D3748;
+    --secondary-600: #1a202c;
+    --secondary-700: #171923;
+    
+    --gray-50: #F7FAFC;
+    --gray-100: #EDF2F7;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E0;
+    --gray-400: #A0AEC0;
+    --gray-500: #718096;
+    --gray-600: #4A5568;
+    --gray-700: #2D3748;
+    --gray-800: #1A202C;
+    --gray-900: #171923;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom focus styles */
+.focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+    border-color: #E53E3E;
+}
+
+/* Tab styles - Fixed overlapping issue */
+.tab-btn {
+    @apply py-3 px-6 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 transition-all duration-200 flex items-center space-x-2 whitespace-nowrap;
+    position: relative;
+    z-index: 1;
+}
+
+.tab-btn.active {
+    @apply text-primary-600 border-primary-600;
+    z-index: 2;
+}
+
+.tab-panel {
+    @apply hidden;
+}
+
+.tab-panel.active {
+    @apply block;
+}
+
+/* Filter button styles */
+.filter-btn {
+    @apply px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-full hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center space-x-2;
+}
+
+.filter-btn.active {
+    @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
+}
+
+/* Tool card styles - Fixed z-index and positioning issues */
+.tool-card {
+    @apply bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-pointer relative;
+    animation: slideUp 0.6s ease-out;
+    z-index: 1;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    z-index: 10;
+}
+
+.tool-card .tool-icon {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl font-bold mb-4 relative;
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+    z-index: 2;
+}
+
+.tool-card .tool-name {
+    @apply text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-200;
+}
+
+.tool-card .tool-description {
+    @apply text-gray-600 text-sm mb-4 line-clamp-2;
+}
+
+.tool-card .tool-category {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.tool-card .tool-url {
+    @apply text-primary-600 hover:text-primary-700 text-sm font-medium flex items-center space-x-1 transition-colors duration-200;
+}
+
+/* Category colors */
+.category-desenvolvimento {
+    @apply bg-blue-100 text-blue-800;
+}
+
+.category-design {
+    @apply bg-purple-100 text-purple-800;
+}
+
+.category-produtividade {
+    @apply bg-green-100 text-green-800;
+}
+
+.category-marketing {
+    @apply bg-red-100 text-red-800;
+}
+
+.category-analise {
+    @apply bg-yellow-100 text-yellow-800;
+}
+
+.category-comunicacao {
+    @apply bg-pink-100 text-pink-800;
+}
+
+.category-outros {
+    @apply bg-gray-100 text-gray-800;
+}
+
+/* Loading skeleton */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Glassmorphism effect */
+.glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Button hover effects */
+.btn-hover-lift {
+    transition: all 0.2s ease-out;
+}
+
+.btn-hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Search bar animation - Fixed positioning */
+.search-bar-enter {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.search-bar-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: all 0.3s ease-out;
+}
+
+.search-bar-exit {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.search-bar-exit-active {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+/* Fixed search bar positioning */
+#searchBar {
+    position: fixed;
+    top: 64px; /* Height of navbar */
+    left: 0;
+    right: 0;
+    z-index: 40;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-out;
+}
+
+#searchBar.show {
+    transform: translateY(0);
+}
+
+/* Modal animations - Fixed z-index */
+.modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    animation: scaleIn 0.3s ease-out;
+    position: relative;
+    z-index: 10000;
+}
+
+/* Toast notification - Fixed positioning */
+.toast-enter {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.toast-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: all 0.3s ease-out;
+}
+
+.toast-exit {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-exit-active {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+/* Table styles */
+.table-row-hover {
+    @apply hover:bg-gray-50 transition-colors duration-150;
+}
+
+.table-cell {
+    @apply px-6 py-4 whitespace-nowrap;
+}
+
+/* Form styles */
+.form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200;
+}
+
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+/* Stats card animation */
+.stats-card {
+    @apply bg-white rounded-2xl p-6 shadow-lg;
+    animation: slideUp 0.6s ease-out;
+}
+
+.stats-card:nth-child(1) { animation-delay: 0.1s; }
+.stats-card:nth-child(2) { animation-delay: 0.2s; }
+.stats-card:nth-child(3) { animation-delay: 0.3s; }
+.stats-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Progress bar */
+.progress-bar {
+    @apply w-full bg-gray-200 rounded-full h-2 overflow-hidden;
+}
+
+.progress-fill {
+    @apply h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-500 ease-out;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+    .tool-card {
+        @apply p-4;
+    }
+    
+    .stats-card {
+        @apply p-4;
+    }
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+    .dark-mode {
+        @apply bg-gray-900 text-white;
+    }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .tool-card {
+        @apply shadow-none border border-gray-300;
+        break-inside: avoid;
+    }
+}
+
+/* Accessibility improvements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus visible for better accessibility */
+.focus-visible:focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .tool-card {
+        @apply border-2 border-gray-900;
+    }
+    
+    .btn-primary {
+        @apply border-2 border-primary-900;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Modern Tool Card Styles - Enhanced */
+.tool-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+    z-index: 1;
+}
+
+.tool-card:hover::before {
+    left: 100%;
+}
+
+/* Enhanced hover effects for tool cards */
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon container hover effect */
+.tool-card .w-12.h-12:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-out;
+}
+
+/* Category badge styles */
+.tool-card .inline-flex.items-center {
+    transition: all 0.2s ease-out;
+}
+
+.tool-card:hover .inline-flex.items-center {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+}
+
+/* Access button enhanced styles */
+.tool-card a[target="_blank"] {
+    position: relative;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.tool-card a[target="_blank"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease-out, height 0.3s ease-out;
+    z-index: -1;
+}
+
+.tool-card a[target="_blank"]:hover::before {
+    width: 100px;
+    height: 100px;
+}
+
+/* Fixed Navigation Bar */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+/* Fixed Grid Container */
+#toolsGrid {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive grid improvements */
+@media (max-width: 640px) {
+    .tool-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Dark mode support for cards */
+@media (prefers-color-scheme: dark) {
+    .tool-card {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+    
+    .tool-card:hover {
+        border-color: #4b5563;
+    }
+}
+
+/* Enhanced animations for modern feel */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slide-in-left {
+    animation: slideInFromLeft 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInFromRight 0.6s ease-out;
+}
+
+/* Logo hover effect */
+img[alt="Perfecta Logo"] {
+    transition: transform 0.3s ease-out;
+}
+
+img[alt="Perfecta Logo"]:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+
+
+/* Navigation fixes - Prevent overlapping issues */
+nav[class*="fixed"] {
+    z-index: 50 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+/* Ensure main content has proper spacing */
+main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fix for tab navigation overlapping */
+.tab-btn {
+    position: relative;
+    z-index: 2;
+    background: white;
+}
+
+/* Ensure proper spacing for fixed navigation */
+body {
+    padding-top: 0;
+}
+
+/* Additional fix for search bar positioning */
+#searchBar {
+    top: 64px !important; /* Navbar height */
+    z-index: 40 !important;
+}
+
+
+/* Fix for tab content spacing - prevent overlapping with tab navigation */
+.tab-panel {
+    margin-top: 2rem !important;
+}
+
+.tab-panel.active {
+    margin-top: 2rem !important;
+}
+
+/* Specific fix for manage tab content */
+#manageTab .bg-white {
+    margin-top: 2rem !important;
+}
+
+/* Ensure tab buttons don't overlap content */
+.tab-btn {
+    margin-bottom: 1rem;
+}
+
+
+
+.category-catalogos {
+    @apply bg-amber-100 text-amber-800;
+}
+
+
+
+.category-documentos {
+    @apply bg-cyan-100 text-cyan-800;
+}
+
