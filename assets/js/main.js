@@ -397,45 +397,57 @@ class ToolsDisplay {
                 name: 'Desenvolvimento', 
                 emoji: '🚀', 
                 className: 'category-desenvolvimento',
-                gradient: 'linear-gradient(135deg, #E53E3E 0%, #dc2626 100%)'
+                gradient: 'linear-gradient(135deg, #E53E3E 0%, #dc2626 100%)' // primary-500 to primary-600
             },
             design: { 
                 name: 'Design', 
                 emoji: '🎨', 
                 className: 'category-design',
-                gradient: 'linear-gradient(135deg, #2D3748 0%, #1a202c 100%)'
+                gradient: 'linear-gradient(135deg, #2D3748 0%, #1a202c 100%)' // secondary-500 to secondary-600
             },
             produtividade: { 
                 name: 'Produtividade', 
                 emoji: '⚡', 
                 className: 'category-produtividade',
-                gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                gradient: 'linear-gradient(135deg, #4A5568 0%, #2D3748 100%)' // gray-600 to gray-700
             },
             marketing: { 
                 name: 'Marketing', 
                 emoji: '📈', 
                 className: 'category-marketing',
-                gradient: 'linear-gradient(135deg, #E53E3E 0%, #dc2626 100%)'
+                gradient: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)' // primary-600 to primary-700
             },
             analise: { 
                 name: 'Análise', 
                 emoji: '📊', 
                 className: 'category-analise',
-                gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
+                gradient: 'linear-gradient(135deg, #1A202C 0%, #171923 100%)' // gray-800 to gray-900
             },
             comunicacao: { 
                 name: 'Comunicação', 
                 emoji: '💬', 
                 className: 'category-comunicacao',
-                gradient: 'linear-gradient(135deg, #2D3748 0%, #1a202c 100%)'
+                gradient: 'linear-gradient(135deg, #1a202c 0%, #171923 100%)' // secondary-600 to secondary-700
             },
             outros: { 
                 name: 'Outros', 
                 emoji: '📦', 
                 className: 'category-outros',
-                gradient: 'linear-gradient(135deg, #718096 0%, #4A5568 100%)'
+                gradient: 'linear-gradient(135deg, #718096 0%, #4A5568 100%)' // gray-500 to gray-600
+            },
+            catalogos: { 
+                name: 'Catálogos', 
+                emoji: '📚', 
+                className: 'category-catalogos',
+                gradient: 'linear-gradient(135deg, #E53E3E 0%, #dc2626 100%)' // primary-500 to primary-600
+            },
+            documentos: { 
+                name: 'Documentos', 
+                emoji: '📄', 
+                className: 'category-documentos',
+                gradient: 'linear-gradient(135deg, #2D3748 0%, #1a202c 100%)' // secondary-500 to secondary-600
             }
-        };
+        };;
         return categories[category] || categories.outros;
     }
 

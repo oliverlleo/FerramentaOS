@@ -123,6 +123,10 @@
                             <i data-lucide="list" class="w-4 h-4"></i>
                             Gerenciar
                         </button>
+                        <button class="tab-btn" data-tab="pages">
+                            <i data-lucide="link" class="w-4 h-4"></i>
+                            Páginas Personalizadas
+                        </button>
                         <button class="tab-btn" data-tab="stats">
                             <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
                             Estatísticas
@@ -287,6 +291,71 @@
                     </div>
                 </div>
 
+                <!-- Custom Pages Tab -->
+                <div id="pagesTab" class="tab-panel">
+                    <div class="max-w-6xl mx-auto">
+                        <!-- Header -->
+                        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8 animate-slide-up">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Páginas Personalizadas</h3>
+                                    <p class="text-gray-600">Crie páginas com ferramentas selecionadas para compartilhar</p>
+                                </div>
+                                <button id="createPageBtn" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    <span>Criar Nova Página</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Pages List -->
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden animate-slide-up">
+                            <div class="p-6 border-b border-gray-200">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-gray-900">Páginas Criadas</h4>
+                                        <p class="text-gray-600">Gerencie suas páginas personalizadas</p>
+                                    </div>
+                                    <div class="relative">
+                                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                                        <input 
+                                            type="text" 
+                                            id="searchPages"
+                                            placeholder="Pesquisar páginas..."
+                                            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pages Table -->
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Página</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ferramentas</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acessos</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                            <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pagesTableBody" class="bg-white divide-y divide-gray-200">
+                                        <!-- Loading state -->
+                                        <tr id="pagesLoading">
+                                            <td colspan="6" class="px-6 py-12 text-center">
+                                                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mb-4"></div>
+                                                <p class="text-gray-600">Carregando páginas...</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Statistics Tab -->
                 <div id="statsTab" class="tab-panel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-slide-up mt-8">
@@ -423,6 +492,8 @@
                             <option value="analise">📊 Análise</option>
                             <option value="comunicacao">💬 Comunicação</option>
                             <option value="outros">📦 Outros</option>
+                            <option value="catalogos">📚 Catálogos</option>
+                            <option value="documentos">📄 Documentos</option>
                         </select>
                     </div>
 
@@ -498,9 +569,266 @@
         </div>
     </div>
 
+    <!-- Create Page Modal -->
+    <div id="createPageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-gray-900">Criar Nova Página Personalizada</h3>
+                    <button id="closeCreatePageModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <form id="createPageForm" class="p-6">
+                <div class="space-y-6">
+                    <!-- Page Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="pageName" class="block text-sm font-medium text-gray-700 mb-2">
+                                Nome da Página *
+                            </label>
+                            <input 
+                                type="text" 
+                                id="pageName" 
+                                name="name"
+                                required
+                                placeholder="Ex: Ferramentas de Design"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                            >
+                        </div>
+                        <div>
+                            <label for="pageDescription" class="block text-sm font-medium text-gray-700 mb-2">
+                                Descrição
+                            </label>
+                            <input 
+                                type="text" 
+                                id="pageDescription" 
+                                name="description"
+                                placeholder="Descrição da página"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Tools Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-4">
+                            Selecionar Ferramentas *
+                        </label>
+                        <div class="border border-gray-300 rounded-xl p-4 max-h-96 overflow-y-auto">
+                            <div id="toolsSelection" class="space-y-3">
+                                <!-- Tools will be loaded here -->
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Selecione as ferramentas que aparecerão na página personalizada</p>
+                    </div>
+                </div>
+
+                <div class="flex space-x-4 pt-6 border-t border-gray-200 mt-6">
+                    <button 
+                        type="submit" 
+                        id="savePageBtn"
+                        class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                    >
+                        <i data-lucide="save" class="w-4 h-4"></i>
+                        <span>Criar Página</span>
+                    </button>
+                    <button 
+                        type="button" 
+                        id="cancelCreatePage"
+                        class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-all duration-200 flex items-center space-x-2"
+                    >
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Page Modal -->
+    <div id="editPageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-gray-900">Editar Página Personalizada</h3>
+                    <button id="closeEditPageModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <form id="editPageForm" class="p-6">
+                <input type="hidden" id="editPageId" name="pageId">
+                <div class="space-y-6">
+                    <!-- Page Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="editPageName" class="block text-sm font-medium text-gray-700 mb-2">
+                                Nome da Página *
+                            </label>
+                            <input 
+                                type="text" 
+                                id="editPageName" 
+                                name="name"
+                                required
+                                placeholder="Ex: Ferramentas de Design"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                            >
+                        </div>
+                        <div>
+                            <label for="editPageDescription" class="block text-sm font-medium text-gray-700 mb-2">
+                                Descrição
+                            </label>
+                            <input 
+                                type="text" 
+                                id="editPageDescription" 
+                                name="description"
+                                placeholder="Descrição da página"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Tools Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-4">
+                            Selecionar Ferramentas *
+                        </label>
+                        <div class="border border-gray-300 rounded-xl p-4 max-h-96 overflow-y-auto">
+                            <div id="editToolsSelection" class="space-y-3">
+                                <!-- Tools will be loaded here -->
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Selecione as ferramentas que aparecerão na página personalizada</p>
+                    </div>
+                </div>
+
+                <div class="flex space-x-4 pt-6 border-t border-gray-200 mt-6">
+                    <button 
+                        type="submit" 
+                        id="updatePageBtn"
+                        class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                    >
+                        <i data-lucide="save" class="w-4 h-4"></i>
+                        <span>Atualizar Página</span>
+                    </button>
+                    <button 
+                        type="button" 
+                        id="cancelEditPage"
+                        class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-all duration-200 flex items-center space-x-2"
+                    >
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Share Page Modal -->
+    <div id="sharePageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-gray-900">Compartilhar Página</h3>
+                    <button id="closeSharePageModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="link" class="w-8 h-8 text-primary-600"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-900 mb-2" id="sharePageName">Nome da Página</h4>
+                    <p class="text-gray-600" id="sharePageDescription">Descrição da página</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Link da Página</label>
+                        <div class="flex">
+                            <input 
+                                type="text" 
+                                id="sharePageUrl" 
+                                readonly
+                                class="flex-1 px-4 py-3 border border-gray-300 rounded-l-xl bg-gray-50 text-gray-600 text-sm"
+                            >
+                            <button 
+                                id="copyPageUrl"
+                                class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-3 rounded-r-xl transition-all duration-200 flex items-center space-x-2"
+                            >
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Copiar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button 
+                            id="openPageUrl"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 mx-auto"
+                        >
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            <span>Abrir Página</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Page Modal -->
+    <div id="deletePageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-gray-900">Excluir Página</h3>
+                    <button id="closeDeletePageModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="trash-2" class="w-8 h-8 text-red-600"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Confirmar Exclusão</h4>
+                    <p class="text-gray-600">Tem certeza que deseja excluir a página <strong id="deletePageName">Nome da Página</strong>?</p>
+                    <p class="text-sm text-red-600 mt-2">Esta ação não pode ser desfeita.</p>
+                </div>
+
+                <div class="flex space-x-4">
+                    <button 
+                        id="confirmDeletePage"
+                        class="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+                    >
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        <span>Excluir</span>
+                    </button>
+                    <button 
+                        id="cancelDeletePage"
+                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+                    >
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="assets/js/firebase.js"></script>
     <script src="assets/js/admin.js"></script>
+    <script src="assets/js/custom-pages.js"></script>
     
     <script>
         // Initialize Lucide icons

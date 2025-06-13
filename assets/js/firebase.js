@@ -16,11 +16,13 @@ firebase.initializeApp(firebaseConfig);
 // Database reference
 const database = firebase.database();
 const toolsRef = database.ref('ferramentas');
+const customPagesRef = database.ref('customPages');
 
 // Export for global access
 window.Firebase = {
   database,
   toolsRef,
+  customPagesRef,
   timestamp: firebase.database.ServerValue.TIMESTAMP
 };
 

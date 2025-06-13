@@ -109,6 +109,11 @@ class AdminPanel {
                     this.renderToolsTable();
                 } else if (targetTab === 'stats') {
                     this.updateStats();
+                } else if (targetTab === 'pages') {
+                    // Custom pages tab is handled by custom-pages.js
+                    if (window.customPagesManager) {
+                        window.customPagesManager.renderPagesTable();
+                    }
                 }
                 
                 // Animate tab content
@@ -644,13 +649,15 @@ class AdminPanel {
     // Utility functions
     getCategoryInfo(category) {
         const categories = {
-            desenvolvimento: { name: 'Desenvolvimento', emoji: '🚀', className: 'category-desenvolvimento', bgColor: 'bg-red-500' },
-            design: { name: 'Design', emoji: '🎨', className: 'category-design', bgColor: 'bg-gray-700' },
-            produtividade: { name: 'Produtividade', emoji: '⚡', className: 'category-produtividade', bgColor: 'bg-green-500' },
-            marketing: { name: 'Marketing', emoji: '📈', className: 'category-marketing', bgColor: 'bg-red-500' },
-            analise: { name: 'Análise', emoji: '📊', className: 'category-analise', bgColor: 'bg-yellow-500' },
-            comunicacao: { name: 'Comunicação', emoji: '💬', className: 'category-comunicacao', bgColor: 'bg-gray-700' },
-            outros: { name: 'Outros', emoji: '📦', className: 'category-outros', bgColor: 'bg-gray-500' }
+            desenvolvimento: { name: 'Desenvolvimento', emoji: '🚀', className: 'category-desenvolvimento', bgColor: 'bg-primary-500' },
+            design: { name: 'Design', emoji: '🎨', className: 'category-design', bgColor: 'bg-secondary-500' },
+            produtividade: { name: 'Produtividade', emoji: '⚡', className: 'category-produtividade', bgColor: 'bg-primary-700' },
+            marketing: { name: 'Marketing', emoji: '📈', className: 'category-marketing', bgColor: 'bg-primary-600' },
+            analise: { name: 'Análise', emoji: '📊', className: 'category-analise', bgColor: 'bg-gray-500' },
+            comunicacao: { name: 'Comunicação', emoji: '💬', className: 'category-comunicacao', bgColor: 'bg-secondary-600' },
+            outros: { name: 'Outros', emoji: '📦', className: 'category-outros', bgColor: 'bg-gray-500' },
+            catalogos: { name: 'Catálogos', emoji: '📚', className: 'category-catalogos', bgColor: 'bg-gray-700' },
+            documentos: { name: 'Documentos', emoji: '📄', className: 'category-documentos', bgColor: 'bg-gray-900' }
         };
         return categories[category] || categories.outros;
     }
